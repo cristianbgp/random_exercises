@@ -10,8 +10,20 @@ class HighScoreTable
   end
   
   def update(num)
-    @highscore_table << num
-    @highscore_table = @highscore_table.sort.reverse
+    if @highscore_table.count == 0
+      @highscore = num
+      @highscore_table << @highscore
+    else
+      @highscore_table.each_with_index do |score, i|
+        if num >= score
+          @highscore_table.insert(i,num)
+          break
+        else
+          @highscore_table << num
+        end
+        break
+      end
+    end
     p @highscore_table
     if @highscore_table.length > @table_length
       @highscore_table = @highscore_table.take(@table_length)
